@@ -1,7 +1,7 @@
 /* ============================================================
    NB Nexa — Gallery Data Manager
    Reads/writes gallery items to localStorage.
-   Used by: index.html (preview), gallery.html (full), admin/gallery.html (editor)
+   Used by: index.html (preview), gallery.html (full), control-room/gallery.html (editor)
    ============================================================ */
 
 window.NBGallery = (function () {

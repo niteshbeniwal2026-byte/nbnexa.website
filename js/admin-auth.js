@@ -70,7 +70,7 @@
 
   function init() {
     const path = window.location.pathname;
-    const isLoginPage = path.endsWith('/admin/login.html') || path.endsWith('/admin/login') || path.endsWith('/admin/');
+    const isLoginPage = path.endsWith('/control-room/login.html') || path.endsWith('/control-room/login') || path.endsWith('/control-room/');
 
     if (isLoginPage) {
       handleLoginForm();

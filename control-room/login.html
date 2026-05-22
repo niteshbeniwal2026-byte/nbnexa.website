@@ -58,12 +58,12 @@
     <p class="mt-6 text-xs text-slate-500">For real security, protect the admin folder using server-side authentication. This login is a browser-side gate only.</p>
     <div class="mt-6 text-center text-slate-500 text-sm">
       <p>If this page is shown instead of the HTTP auth prompt, open the admin path directly:</p>
-      <a href="/admin/" class="text-cyan-300 hover:text-cyan-400">/admin/</a>
+      <a href="/control-room/" class="text-cyan-300 hover:text-cyan-400">/control-room/</a>
     </div>
   </div>
   <script>
-    if (window.location.pathname.endsWith('/admin/login.html')) {
-      window.location.replace('/admin/');
+    if (window.location.pathname.endsWith('/control-room/login.html')) {
+      window.location.replace('/control-room/');
     }
   </script>
   <script src="../js/admin-auth.js"></script>
