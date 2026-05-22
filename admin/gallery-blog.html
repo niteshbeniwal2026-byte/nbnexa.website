@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NB Nexa | Admin — Gallery &amp; Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Quill Rich Text Editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"/>
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{
+        colors:{
+          "secondary-container":"#9d05ff","primary-fixed-dim":"#00dbe9","surface-container":"#171f33",
+          "surface-container-highest":"#2d3449","surface-container-high":"#222a3d","secondary":"#dfb7ff",
+          "surface-dim":"#0b1326","on-surface-variant":"#b9cacb","primary-container":"#00f0ff",
+          "tertiary-fixed-dim":"#00e383","background":"#0b1326","surface":"#0b1326","on-background":"#dae2fd",
+          "tertiary-fixed":"#5bffa1","error":"#ffb4ab","primary":"#dbfcff","surface-container-lowest":"#060e20",
+          "outline-variant":"#3b494b","surface-container-low":"#131b2e","on-primary":"#00363a",
+          "tertiary":"#dcffe2","on-surface":"#dae2fd","outline":"#849495"
+        },
+        borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+        fontFamily:{"headline":["Space Grotesk"],"body":["Inter"]}
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    body { font-family:'Inter',sans-serif; background:#0b1326; }
+    h1,h2,h3,.font-headline { font-family:'Space Grotesk',sans-serif; }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+
+    /* Sidebar */
+    .sidebar-link { display:flex; align-items:center; gap:.75rem; padding:.75rem 1rem; color:#94a3b8; border-radius:.5rem; transition:all .2s; text-decoration:none; font-weight:500; }
+    .sidebar-link:hover { color:#f1f5f9; background:#0f172a; transform:translateX(2px); }
+    .sidebar-link.active { color:#22d3ee; background:rgba(34,211,238,.08); border-right:3px solid #22d3ee; }
+
+    /* Tab switcher */
+    .admin-tab { padding:.6rem 1.4rem; border-radius:.5rem; font-weight:700; font-family:'Space Grotesk',sans-serif; font-size:.875rem; cursor:pointer; transition:all .2s; border:none; }
+    .admin-tab.active { background:#dbfcff; color:#00363a; }
+    .admin-tab:not(.active) { background:#171f33; color:#b9cacb; }
+    .admin-tab:not(.active):hover { background:#222a3d; }
+
+    /* Gallery grid in admin */
+    #admin-gallery-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem;
+    }
+    .admin-gcard { position:relative; aspect-ratio:1/1; border-radius:.75rem; overflow:hidden; background:#171f33; group; }
+    .admin-gcard img, .admin-gcard video { width:100%; height:100%; object-fit:cover; display:block; }
+    .admin-gcard .del-btn { position:absolute; top:.5rem; right:.5rem; background:rgba(220,38,38,.85); border:none; color:white; border-radius:50%; width:2rem; height:2rem; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:opacity .2s; }
+    .admin-gcard:hover .del-btn { opacity:1; }
+    .admin-gcard .type-badge { position:absolute; top:.5rem; left:.5rem; background:rgba(0,0,0,.6); color:#dbfcff; font-size:.65rem; font-weight:700; padding:.2rem .5rem; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; }
+
+    /* Quill overrides for dark theme */
+    .ql-toolbar { background:#131b2e !important; border-color:#3b494b !important; border-radius:.5rem .5rem 0 0; }
+    .ql-container { background:#060e20 !important; border-color:#3b494b !important; border-radius:0 0 .5rem .5rem; min-height:320px; font-family:'Inter',sans-serif; font-size:1rem; color:#dae2fd; }
+    .ql-editor { min-height:300px; color:#dae2fd; }
+    .ql-stroke { stroke:#b9cacb !important; }
+    .ql-fill { fill:#b9cacb !important; }
+    .ql-picker-label { color:#b9cacb !important; }
+    .ql-toolbar button:hover .ql-stroke, .ql-toolbar button.ql-active .ql-stroke { stroke:#dbfcff !important; }
+
+    /* Post list */
+    .post-row { display:flex; align-items:center; gap:1rem; padding:1rem; background:#131b2e; border-radius:.75rem; border:1px solid rgba(59,73,75,.4); }
+    .post-row:hover { border-color:rgba(219,252,255,.15); }
+
+    /* Form inputs */
+    .field { width:100%; background:#060e20; border:1px solid #3b494b; border-radius:.5rem; padding:.75rem 1rem; color:#dae2fd; font-family:'Inter',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s; }
+    .field:focus { border-color:#00dbe9; box-shadow:0 0 0 3px rgba(0,219,233,.12); }
+    .field::placeholder { color:#849495; }
+    label.lbl { display:block; font-size:.8rem; font-weight:700; color:#b9cacb; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; }
+
+    /* Drag/drop upload zone */
+    #drop-zone { border:2px dashed #3b494b; border-radius:1rem; padding:3rem 2rem; text-align:center; cursor:pointer; transition:all .2s; }
+    #drop-zone.drag-over { border-color:#00dbe9; background:rgba(0,219,233,.06); }
+    #drop-zone:hover { border-color:#849495; }
+
+    /* Toast */
+    #toast { position:fixed; bottom:2rem; right:2rem; padding:.8rem 1.5rem; border-radius:.75rem; font-weight:700; font-size:.9rem; z-index:9999; opacity:0; transform:translateY(1rem); transition:all .3s; pointer-events:none; }
+    #toast.show { opacity:1; transform:translateY(0); }
+    #toast.success { background:#064e3b; color:#6ee7b7; border:1px solid #065f46; }
+    #toast.error { background:#450a0a; color:#fca5a5; border:1px solid #7f1d1d; }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="bg-slate-950 left-0 h-full w-64 flex flex-col py-8 px-4 border-r border-slate-900 fixed top-0 z-50">
+  <div class="mb-10">
+    <h1 class="text-lg font-black text-cyan-400 mb-1">NB Nexa Admin</h1>
+    <p class="text-xs text-slate-500 uppercase tracking-widest">System Controller</p>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="sidebar-link" href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+    <a class="sidebar-link" href="analytics.html"><span class="material-symbols-outlined">insights</span><span>Analytics</span></a>
+    <a class="sidebar-link" href="automation.html"><span class="material-symbols-outlined">bolt</span><span>Automation Flows</span></a>
+    <a class="sidebar-link" href="clients.html"><span class="material-symbols-outlined">group</span><span>Client Database</span></a>
+    <a class="sidebar-link active" href="gallery-blog.html"><span class="material-symbols-outlined">perm_media</span><span>Gallery &amp; Blog</span></a>
+    <a class="sidebar-link" href="settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+  </nav>
+  <div class="mt-auto space-y-2 pt-8 border-t border-slate-900">
+    <a href="../gallery.html" target="_blank" class="w-full bg-surface-container text-primary border border-primary/20 font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 mb-2 no-underline hover:bg-surface-container-high transition-opacity text-sm">
+      <span class="material-symbols-outlined text-sm">open_in_new</span> View Gallery
+    </a>
+    <a class="sidebar-link" href="../legal.html#contact"><span class="material-symbols-outlined">help</span><span>Support</span></a>
+    <a class="sidebar-link" href="../index.html"><span class="material-symbols-outlined">logout</span><span>Back to Site</span></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen overflow-y-auto">
+
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/60 px-8 py-4 flex items-center justify-between">
+    <div>
+      <h2 class="font-headline font-bold text-xl text-white">Gallery &amp; Blog Manager</h2>
+      <p class="text-xs text-slate-500 mt-0.5">Upload media &amp; publish blog posts</p>
+    </div>
+    <div class="flex gap-2">
+      <button class="admin-tab active" id="tab-gallery" onclick="showPanel('gallery')">
+        <span class="material-symbols-outlined align-middle text-sm">perm_media</span> Gallery
+      </button>
+      <button class="admin-tab" id="tab-blog" onclick="showPanel('blog')">
+        <span class="material-symbols-outlined align-middle text-sm">edit_note</span> Blog
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════ GALLERY PANEL ══════════ -->
+  <section id="panel-gallery" class="p-8 space-y-8">
+
+    <!-- Upload Card -->
+    <div class="bg-surface-container-low rounded-2xl border border-outline-variant/20 p-8">
+      <h3 class="font-headline text-lg font-bold text-white mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">cloud_upload</span> Add Media
+      </h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- URL input method -->
+        <div class="space-y-4">
+          <p class="text-on-surface-variant text-sm font-semibold uppercase tracking-widest">Paste URL</p>
+          <div>
+            <label class="lbl">Media URL <span class="text-primary/60 font-normal normal-case tracking-normal">(image or YouTube/Vimeo/video)</span></label>
+            <input id="media-url" class="field" type="url" placeholder="https://... or https://youtube.com/watch?v=..."/>
+          </div>
+          <div>
+            <label class="lbl">Caption <span class="text-primary/60 font-normal normal-case tracking-normal">(optional)</span></label>
+            <input id="media-caption" class="field" type="text" placeholder="Behind the scenes at Client X..."/>
+          </div>
+          <div>
+            <label class="lbl">Type</label>
+            <div class="flex gap-3 mt-1">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="media-type" value="photo" checked class="accent-cyan-400"/> <span class="text-on-surface text-sm">Photo</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="media-type" value="video" class="accent-cyan-400"/> <span class="text-on-surface text-sm">Video</span>
+              </label>
+            </div>
+          </div>
+          <button onclick="addMediaFromUrl()" class="w-full py-3 bg-gradient-to-r from-primary to-primary-fixed-dim text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all font-headline">
+            <span class="material-symbols-outlined align-middle text-sm">add</span> Add to Gallery
+          </button>
+        </div>
+
+        <!-- Drag & drop / file -->
+        <div>
+          <p class="text-on-surface-variant text-sm font-semibold uppercase tracking-widest mb-4">Upload File</p>
+          <div id="drop-zone" onclick="document.getElementById('file-input').click()">
+            <span class="material-symbols-outlined text-5xl text-on-surface-variant/40 block mb-3">upload_file</span>
+            <p class="text-on-surface-variant font-semibold mb-1">Drag &amp; drop or click to browse</p>
+            <p class="text-xs text-on-surface-variant/50">JPG, PNG, GIF, WebP, MP4, MOV — max 10MB (stored as data URL)</p>
+          </div>
+          <input id="file-input" type="file" accept="image/*,video/mp4,video/quicktime" class="hidden" multiple/>
+          <div>
+            <label class="lbl mt-4">File Caption</label>
+            <input id="file-caption" class="field" type="text" placeholder="Optional caption for uploaded file"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery items list -->
+    <div class="bg-surface-container-low rounded-2xl border border-outline-variant/20 p-8">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-headline text-lg font-bold text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">grid_view</span>
+          Current Gallery
+          <span id="gallery-count" class="text-sm font-normal text-on-surface-variant ml-2"></span>
+        </h3>
+        <button onclick="clearGallery()" class="text-xs text-red-400 hover:text-red-300 border border-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
+          <span class="material-symbols-outlined text-sm align-middle">delete_sweep</span> Clear All
+        </button>
+      </div>
+      <div id="admin-gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ BLOG PANEL ══════════ -->
+  <section id="panel-blog" class="p-8 space-y-8 hidden">
+
+    <!-- Post list + new post -->
+    <div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
+
+      <!-- Post List (left) -->
+      <div class="xl:col-span-2 bg-surface-container-low rounded-2xl border border-outline-variant/20 p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-headline font-bold text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-tertiary">article</span> Posts
+          </h3>
+          <button onclick="newPost()" class="text-xs bg-primary text-on-primary font-bold px-3 py-1.5 rounded-lg hover:opacity-90 transition-opacity">
+            + New Post
+          </button>
+        </div>
+        <div id="post-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Editor (right) -->
+      <div class="xl:col-span-3 bg-surface-container-low rounded-2xl border border-outline-variant/20 p-6" id="editor-card">
+        <h3 class="font-headline font-bold text-white flex items-center gap-2 mb-5">
+          <span class="material-symbols-outlined text-primary">edit_note</span>
+          <span id="editor-mode-label">New Post</span>
+        </h3>
+        <input type="hidden" id="post-id"/>
+        <div class="space-y-4">
+          <div>
+            <label class="lbl">Post Title *</label>
+            <input id="post-title" class="field" type="text" placeholder="Enter post title..."/>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="lbl">Category</label>
+              <input id="post-category" class="field" type="text" placeholder="e.g. Automation, AI, News"/>
+            </div>
+            <div>
+              <label class="lbl">Cover Image URL</label>
+              <input id="post-cover" class="field" type="url" placeholder="https://..."/>
+            </div>
+          </div>
+          <div>
+            <label class="lbl">Excerpt <span class="text-primary/60 font-normal normal-case tracking-normal">(short description for cards)</span></label>
+            <textarea id="post-excerpt" class="field" rows="2" placeholder="Brief summary shown in blog listings..."></textarea>
+          </div>
+          <div>
+            <label class="lbl">Content</label>
+            <div id="quill-editor"></div>
+          </div>
+          <div class="flex items-center gap-3 pt-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="post-published" class="accent-cyan-400 w-4 h-4"/>
+              <span class="text-sm text-on-surface">Published</span>
+            </label>
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button onclick="savePost()" class="flex-1 py-3 bg-gradient-to-r from-primary to-primary-fixed-dim text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all font-headline">
+              <span class="material-symbols-outlined align-middle text-sm">save</span> Save Post
+            </button>
+            <button onclick="newPost()" class="py-3 px-5 bg-surface-container text-on-surface-variant border border-outline-variant/30 font-bold rounded-xl hover:bg-surface-container-high transition-colors">
+              Clear
+            </button>
+          </div>
+          <div id="save-msg" class="hidden text-center text-sm font-bold py-2 rounded-lg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="px-8 py-6 border-t border-slate-800/50 flex justify-between items-center bg-slate-950/30 mt-auto">
+    <p class="text-slate-500 text-xs">© 2026 NB Nexa AI Automation Agency.</p>
+    <a class="text-xs text-slate-500 hover:text-cyan-400" href="../index.html">Main Site</a>
+  </footer>
+</main>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="../js/admin-auth.js"></script>
+<script src="../js/gallery.js"></script>
+<script src="../js/blog.js"></script>
+<script>
+// ─── PANEL SWITCHER ──────────────────────────────
+function showPanel(name) {
+  ['gallery','blog'].forEach(function(p){
+    document.getElementById('panel-'+p).classList.toggle('hidden', p!==name);
+    var t = document.getElementById('tab-'+p);
+    t.classList.toggle('active', p===name);
+  });
+  if(name==='gallery') renderAdminGallery();
+  if(name==='blog') renderPostList();
+}
+
+// ─── TOAST ───────────────────────────────────────
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + (type||'success');
+  clearTimeout(el._t);
+  el._t = setTimeout(function(){ el.classList.remove('show'); }, 3000);
+}
+
+// ─── GALLERY ─────────────────────────────────────
+function renderAdminGallery() {
+  var grid = document.getElementById('admin-gallery-grid');
+  var items = NBGallery.load();
+  var count = document.getElementById('gallery-count');
+  count.textContent = '(' + items.length + ' items)';
+  if (!items.length) {
+    grid.innerHTML = '<p class="col-span-full text-center text-on-surface-variant/50 py-12">No items yet. Add some above.</p>';
+    return;
+  }
+  grid.innerHTML = '';
+  items.forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'admin-gcard';
+    var preview = item.type === 'video'
+      ? (item.url.includes('youtube') || item.url.includes('youtu.be')
+          ? '<div class="w-full h-full bg-surface-container-highest flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-on-surface-variant/40">play_circle</span></div>'
+          : '<video src="'+item.url+'" class="w-full h-full object-cover" preload="none"></video>')
+      : '<img src="'+item.url+'" alt="'+(item.caption||'')+'" class="w-full h-full object-cover"/>';
+    card.innerHTML = preview +
+      '<span class="type-badge">'+item.type+'</span>' +
+      (item.caption ? '<div class="absolute bottom-0 left-0 right-0 bg-black/60 p-2 text-xs text-white truncate">'+item.caption+'</div>' : '') +
+      '<button class="del-btn" onclick="deleteItem(\''+item.id+'\')"><span class="material-symbols-outlined text-sm">delete</span></button>';
+    grid.appendChild(card);
+  });
+}
+
+function deleteItem(id) {
+  if(!confirm('Remove this item from the gallery?')) return;
+  NBGallery.remove(id);
+  renderAdminGallery();
+  toast('Item removed.', 'success');
+}
+
+function clearGallery() {
+  if(!confirm('Clear ALL gallery items? This cannot be undone.')) return;
+  NBGallery.save([]);
+  renderAdminGallery();
+  toast('Gallery cleared.', 'success');
+}
+
+function addMediaFromUrl() {
+  var url = document.getElementById('media-url').value.trim();
+  var caption = document.getElementById('media-caption').value.trim();
+  var type = document.querySelector('input[name="media-type"]:checked').value;
+  if (!url) { toast('Please enter a URL.', 'error'); return; }
+  NBGallery.add({ url: url, caption: caption, type: type });
+  document.getElementById('media-url').value = '';
+  document.getElementById('media-caption').value = '';
+  renderAdminGallery();
+  toast('Added to gallery!', 'success');
+}
+
+// File upload: convert to base64 data URL
+document.getElementById('file-input').addEventListener('change', function(e) {
+  var files = Array.from(e.target.files);
+  var caption = document.getElementById('file-caption').value.trim();
+  if (!files.length) return;
+  var processed = 0;
+  files.forEach(function(file) {
+    if (file.size > 10 * 1024 * 1024) { toast(file.name + ' exceeds 10MB limit.', 'error'); processed++; return; }
+    var type = file.type.startsWith('video') ? 'video' : 'photo';
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      NBGallery.add({ url: ev.target.result, caption: caption, type: type });
+      processed++;
+      if (processed === files.length) { renderAdminGallery(); toast(files.length + ' file(s) added!', 'success'); }
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+  document.getElementById('file-caption').value = '';
+});
+
+// Drag & drop
+var dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', function(e){ e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', function(){ dz.classList.remove('drag-over'); });
+dz.addEventListener('drop', function(e){
+  e.preventDefault(); dz.classList.remove('drag-over');
+  var files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image')||f.type.startsWith('video'));
+  if(!files.length){ toast('Only image/video files accepted.','error'); return; }
+  var fi = document.getElementById('file-input');
+  var dt = new DataTransfer();
+  files.forEach(function(f){ dt.items.add(f); });
+  fi.files = dt.files;
+  fi.dispatchEvent(new Event('change'));
+});
+
+// ─── BLOG ────────────────────────────────────────
+var quill;
+document.addEventListener('DOMContentLoaded', function() {
+  quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    placeholder: 'Write your post content here...',
+    modules: {
+      toolbar: [
+        [{ header: [1,2,3,false] }],
+        ['bold','italic','underline','strike'],
+        ['blockquote','code-block'],
+        [{ list:'ordered' },{ list:'bullet' }],
+        [{ color:[] },{ background:[] }],
+        ['link','image'],
+        ['clean']
+      ]
+    }
+  });
+  renderAdminGallery();
+  renderPostList();
+});
+
+function renderPostList() {
+  var list = document.getElementById('post-list');
+  var posts = NBBlog.load();
+  if(!posts.length) {
+    list.innerHTML = '<p class="text-on-surface-variant/50 text-sm py-6 text-center">No posts yet. Create one →</p>';
+    return;
+  }
+  list.innerHTML = '';
+  posts.forEach(function(post) {
+    var row = document.createElement('div');
+    row.className = 'post-row group';
+    var date = post.updatedAt ? new Date(post.updatedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+    row.innerHTML =
+      '<div class="flex-1 min-w-0">' +
+        '<p class="font-bold text-sm text-on-surface truncate">' + (post.title||'Untitled') + '</p>' +
+        '<div class="flex items-center gap-2 mt-1">' +
+          (post.category ? '<span class="text-xs text-primary/70">'+post.category+'</span>' : '') +
+          '<span class="text-xs text-on-surface-variant/50">'+date+'</span>' +
+          '<span class="text-xs px-1.5 py-0.5 rounded '+(post.published ? 'bg-green-900/40 text-green-400' : 'bg-surface-container-highest text-on-surface-variant/60')+'">'+(post.published?'Live':'Draft')+'</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">' +
+        '<button onclick="editPost(\''+post.id+'\')" class="text-xs text-primary border border-primary/20 px-2 py-1 rounded-lg hover:bg-primary/10 transition-colors">Edit</button>' +
+        '<button onclick="deletePost(\''+post.id+'\')" class="text-xs text-red-400 border border-red-400/20 px-2 py-1 rounded-lg hover:bg-red-400/10 transition-colors">Del</button>' +
+      '</div>';
+    list.appendChild(row);
+  });
+}
+
+function newPost() {
+  document.getElementById('post-id').value = '';
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-category').value = '';
+  document.getElementById('post-cover').value = '';
+  document.getElementById('post-excerpt').value = '';
+  document.getElementById('post-published').checked = false;
+  if(quill) quill.setContents([]);
+  document.getElementById('editor-mode-label').textContent = 'New Post';
+  document.getElementById('save-msg').classList.add('hidden');
+}
+
+function editPost(id) {
+  var post = NBBlog.get(id);
+  if(!post) return;
+  document.getElementById('post-id').value = post.id;
+  document.getElementById('post-title').value = post.title || '';
+  document.getElementById('post-category').value = post.category || '';
+  document.getElementById('post-cover').value = post.cover || '';
+  document.getElementById('post-excerpt').value = post.excerpt || '';
+  document.getElementById('post-published').checked = !!post.published;
+  if(quill) quill.clipboard.dangerouslyPasteHTML(post.content || '');
+  document.getElementById('editor-mode-label').textContent = 'Editing: ' + (post.title || 'Post');
+  document.getElementById('editor-card').scrollIntoView({ behavior:'smooth' });
+}
+
+function savePost() {
+  var title = document.getElementById('post-title').value.trim();
+  if(!title) { toast('Please add a title.','error'); return; }
+  var post = {
+    id: document.getElementById('post-id').value || undefined,
+    title: title,
+    category: document.getElementById('post-category').value.trim(),
+    cover: document.getElementById('post-cover').value.trim(),
+    excerpt: document.getElementById('post-excerpt').value.trim(),
+    content: quill ? quill.root.innerHTML : '',
+    published: document.getElementById('post-published').checked
+  };
+  var saved = NBBlog.upsert(post);
+  document.getElementById('post-id').value = saved.id;
+  document.getElementById('editor-mode-label').textContent = 'Editing: ' + saved.title;
+  renderPostList();
+  toast('Post saved!', 'success');
+}
+
+function deletePost(id) {
+  if(!confirm('Delete this post permanently?')) return;
+  NBBlog.remove(id);
+  renderPostList();
+  newPost();
+  toast('Post deleted.', 'success');
+}
+</script>
+</body>
+</html>

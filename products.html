@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="NB Nexa Projects — AI Sales Agents, Web & App Development, Chat Automation, Social Media Automation. Explore our full service ecosystem."/>
+  <title>NB Nexa | Projects & Solutions</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230b1326'/><text y='24' x='4' font-size='22' font-family='monospace' fill='%2300dbe9'>N</text></svg>"/>
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:title" content="NB Nexa | Projects & Solutions"/>
+  <meta property="og:description" content="AI Sales Agents, Web & App Dev, Chat Automation — explore the full NB Nexa service ecosystem."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://nbnexa.com/products.html"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: { extend: {
+        colors: {
+          "secondary-container":"#9d05ff","primary-fixed-dim":"#00dbe9","surface-container":"#171f33",
+          "surface-container-highest":"#2d3449","surface-container-high":"#222a3d","secondary":"#dfb7ff",
+          "surface-dim":"#0b1326","on-surface-variant":"#b9cacb","primary-container":"#00f0ff",
+          "tertiary-fixed-dim":"#00e383","background":"#0b1326","surface":"#0b1326","on-background":"#dae2fd",
+          "tertiary-fixed":"#5bffa1","error":"#ffb4ab","on-secondary":"#4b007e","primary":"#dbfcff",
+          "surface-container-lowest":"#060e20","outline-variant":"#3b494b","primary-fixed":"#7df4ff",
+          "surface-container-low":"#131b2e","on-primary":"#00363a","tertiary":"#dcffe2",
+          "on-surface":"#dae2fd","outline":"#849495","surface-bright":"#31394d"
+        },
+        borderRadius: { "DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem" },
+        fontFamily: { "headline":["Space Grotesk"],"body":["Inter"] }
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+  <style>
+    body { background-color: #0b1326; color: #dae2fd; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+    .bg-grid-pattern { background-image: radial-gradient(circle at 2px 2px, rgba(219,252,255,0.05) 1px, transparent 0); background-size: 40px 40px; }
+    .glow-cyan:hover { box-shadow: 0 0 20px rgba(0,240,255,0.3); }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/70 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
+  <div class="flex justify-between items-center px-6 md:px-12 py-4 max-w-screen-2xl mx-auto">
+    <a href="index.html" class="site-logo-link" aria-label="NB Nexa — Home">
+      <img src="assests/logo.png" alt="NB Nexa" class="site-logo-img" width="160" height="48" decoding="async"
+        onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"/>
+      <span class="site-logo-fallback hidden">NB Nexa</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 nav-links" style="font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em;">
+      <a href="index.html" class="text-slate-300 hover:text-white">Home</a>
+      <a href="products.html" class="active text-cyan-300 font-bold border-b-2 border-cyan-400">Products</a>
+      <a href="legal.html" class="text-slate-300 hover:text-white">Legal</a>
+      <a href="nb-nexa-blog.html" class="text-slate-300 hover:text-white">Blog</a>
+      <a href="gallery.html" class="text-slate-300 hover:text-white">Gallery</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="index.html#contact" class="bg-gradient-to-r from-primary to-primary-fixed-dim text-on-primary px-6 py-2 rounded-md font-bold transition-all hover:scale-105" style="font-family:'Space Grotesk',sans-serif;">
+        Get Started
+      </a>
+      <button id="hamburger" aria-label="Open menu" aria-expanded="false" class="md:hidden flex flex-col gap-1.5 p-2">
+        <span class="block w-6 h-0.5 bg-slate-300"></span>
+        <span class="block w-6 h-0.5 bg-slate-300"></span>
+        <span class="block w-6 h-0.5 bg-slate-300"></span>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800/50 bg-slate-900/95 backdrop-blur-xl">
+    <div class="flex flex-col px-6 py-4 gap-4" style="font-family:'Space Grotesk',sans-serif;">
+      <a href="index.html" class="text-slate-300 hover:text-white py-2">Home</a>
+      <a href="products.html" class="text-cyan-300 font-bold py-2">Products</a>
+      <a href="legal.html" class="text-slate-300 hover:text-white py-2">Legal</a>
+      <a href="nb-nexa-blog.html" class="text-slate-300 hover:text-white py-2">Blog</a>
+      <a href="gallery.html" class="text-slate-300 hover:text-white py-2">Gallery</a>
+      <a href="index.html#contact" class="mt-2 text-center py-3 bg-gradient-to-r from-primary to-primary-fixed-dim text-on-primary font-bold rounded-md">Get Started</a>
+    </div>
+  </div>
+</nav>
+ <!-- Social Media Automation Section --> <section class="py-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
+  <div class="bg-slate-950/95 rounded-3xl border border-primary-fixed-dim/10 shadow-2xl overflow-hidden backdrop-blur-xl">
+    <div class="px-6 py-8 lg:px-10 lg:py-10">
+      <div class="max-w-3xl">
+        <p class="text-primary-fixed-dim uppercase tracking-[0.3em] text-xs font-semibold mb-4" style="font-family:'Space Grotesk',sans-serif;">Social Media Automation</p>
+        <h1 class="text-4xl md:text-5xl font-headline font-bold text-white">Social Media Automation</h1>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr] items-start mt-10">     <div class="bg-surface-container-high rounded-3xl border border-primary-fixed-dim/40 overflow-hidden shadow-[0_30px_60px_-32px_rgba(0,219,233,0.55)]">       <div class="relative overflow-hidden bg-slate-950 aspect-video min-h-[260px]">         <video class="w-full h-full object-cover" src="assests/sma.mp4" autoplay muted loop playsinline preload="metadata"></video>         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>         <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-2 text-left">           <h2 class="text-3xl font-headline font-bold text-white">SOCIAL MEDIA Automation</h2>           <p class="text-slate-300 max-w-2xl">Publish content across multiple social media accounts from one simple dashboard.</p>         </div>       </div>     </div>     <div class="bg-surface-container p-6 rounded-3xl border border-primary-fixed-dim/20">       <div class="flex items-start gap-4 mb-6">         <span class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">           <span class="material-symbols-outlined text-3xl">share</span>         </span>         <div>           <p class="text-xs uppercase tracking-[0.25em] text-primary-fixed-dim mb-2">Social Media Automation</p>           <h2 class="text-3xl font-headline font-bold text-white">Manage All Your Social Media and Google Business Profile From One Platform</h2>         </div>       </div>       <p class="text-slate-300 mb-8">Social Media Automation is built for all kinds of businesses that want faster, easier, and more consistent online posting. From one platform, you can manage content across your social media channels and Google Business Profile, and even trigger workflows through Telegram for quicker publishing and team coordination.</p>       <ul class="space-y-4 text-slate-400 mb-8">         <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span>Unified multi-platform post scheduling</li>         <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span>Auto-post business updates to Google Business Profile</li>         <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary">done</span>Telegram-powered workflow triggers</li>       </ul>       <div class="flex flex-col sm:flex-row gap-3">         <a href="https://sma.nbnexa.com" class="flex-1 bg-gradient-to-r from-primary to-primary-fixed-dim text-on-primary px-5 py-3 rounded-lg font-bold text-center hover:scale-105 transition-all">Access Social Media App</a>         <a href="index.html#contact" class="flex-1 border border-primary-fixed-dim/25 text-white px-5 py-3 rounded-lg font-semibold text-center hover:bg-surface-container transition-colors">Contact Sales</a>       </div>     </div>   </div>
+      <div id="features" class="grid md:grid-cols-2 gap-6 mt-8">     <div class="bg-surface-container p-6 rounded-xl border border-primary-fixed-dim/20 hover:border-primary-fixed-dim transition-colors">       <div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-6">         <span class="text-2xl font-bold text-primary-fixed-dim">1</span>       </div>       <h3 class="text-xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Multi-Platform Posting</h3>       <p class="text-slate-300" style="font-family:'Inter',sans-serif;">         Publish content across multiple social media accounts from one central platform.       </p>     </div>      <div class="bg-surface-container p-6 rounded-xl border border-primary-fixed-dim/20 hover:border-primary-fixed-dim transition-colors">       <div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-5">         <span class="text-2xl font-bold text-primary-fixed-dim">2</span>       </div>       <h3 class="text-xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Telegram-Based Workflow</h3>       <p class="text-slate-300" style="font-family:'Inter',sans-serif;">         Send commands, content, or updates through Telegram and move your posting workflow faster.       </p>     </div>      <div class="bg-surface-container p-6 rounded-xl border border-primary-fixed-dim/20 hover:border-primary-fixed-dim transition-colors">       <div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-5">         <span class="text-2xl font-bold text-primary-fixed-dim">3</span>       </div>       <h3 class="text-xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Business-Friendly Dashboard</h3>       <p class="text-slate-300" style="font-family:'Inter',sans-serif;">         A simple dashboard helps teams and business owners manage daily social media work without switching between many apps.       </p>     </div>      <div class="bg-surface-container p-6 rounded-xl border border-primary-fixed-dim/20 hover:border-primary-fixed-dim transition-colors">       <div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center mb-5">         <span class="text-2xl font-bold text-primary-fixed-dim">4</span>       </div>       <h3 class="text-xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Time-Saving Automation</h3>       <p class="text-slate-300" style="font-family:'Inter',sans-serif;">         Reduce manual work and stay active online with a more automated posting system.       </p>     </div>   </div>
+    </div>
+  </div>
+ </section>
+
+<main class="pt-32 pb-20 bg-grid-pattern">
+  <!-- Hero -->
+  <section class="max-w-screen-2xl mx-auto px-12 mb-32">
+    <div class="flex flex-col md:flex-row items-end justify-between gap-12 reveal">
+      <div class="max-w-3xl">
+        <span class="text-primary tracking-widest uppercase text-sm font-bold mb-4 block">Product Ecosystem</span>
+        <h1 class="text-6xl md:text-8xl font-headline font-bold text-primary tracking-tighter leading-[0.9] mb-8">
+          The Synthetic<br/>Inventory.
+        </h1>
+        <p class="text-lg text-on-surface-variant max-w-xl">
+          A curated collection of intelligent agents, high-performance web applications, and modular AI engines designed to transform the digital landscape.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Bento Grid -->
+  <section class="max-w-screen-2xl mx-auto px-12 mb-40">
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-xl overflow-hidden relative group reveal hover-lift">
+        <div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent z-10"></div>
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG5zjvGyPEF6790Ou6WN7MzdSQWLRuf6G75QN8dnVJjGmbmewkinvZ4Ih8foP0kMJiu3HeujqNuNUCot7JEuwPXeeH7kckCJcnOOaz-nYPUuTRWQjXF0UtNoBFhc5CtRQyHz4iZPz3k1pH-q07qBxqn15W3Ke_D_Wmds3WYGOp1NTu3q13kTbJVUluoEA2ANQ3jEiUICRpcvIdMaZFqX3z3a0zV29LOgtBaxkelOkrXXiIA2TAwo-isLvjura8XfWRku5IASOBzFU"
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="AuraFlow Enterprise"/>
+        <div class="absolute bottom-0 left-0 p-12 z-20 w-full">
+          <div class="flex gap-3 mb-6">
+            <span class="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs font-bold rounded-full">OpenAI</span>
+            <span class="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs font-bold rounded-full">Next.js</span>
+            <span class="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs font-bold rounded-full">Tailwind</span>
+          </div>
+          <h3 class="text-4xl font-headline font-bold text-white mb-4">AuraFlow Enterprise</h3>
+          <p class="text-on-surface-variant max-w-lg mb-8">The ultimate AI orchestration layer for modern enterprises. Automate cross-departmental workflows with zero-latency neural routing.</p>
+          <a href="index.html#contact" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-bold flex items-center gap-2 hover:bg-white transition-colors w-fit">
+            Explore Solution <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+        <div class="h-full bg-surface-container-high rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden reveal hover-lift">
+          <div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary-container/20 blur-[80px]"></div>
+          <span class="material-symbols-outlined text-secondary text-4xl mb-6">cognition</span>
+          <h4 class="text-2xl font-headline font-bold text-white mb-2">NeuralSync API</h4>
+          <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">High-speed synchronization between legacy databases and LLM-ready vector stores.</p>
+          <div class="flex items-center gap-4 text-xs font-bold text-secondary">
+            <span>PYTHON</span><div class="w-1 h-1 bg-secondary rounded-full"></div><span>FASTAPI</span>
+          </div>
+        </div>
+        <div class="h-full bg-surface-container-high rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden reveal hover-lift">
+          <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-tertiary-container/10 blur-[80px]"></div>
+          <span class="material-symbols-outlined text-tertiary text-4xl mb-6">query_stats</span>
+          <h4 class="text-2xl font-headline font-bold text-white mb-2">InsightEngine</h4>
+          <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Real-time predictive analytics using proprietary transformer models optimized for finance.</p>
+          <div class="flex items-center gap-4 text-xs font-bold text-tertiary">
+            <span>PYTORCH</span><div class="w-1 h-1 bg-tertiary rounded-full"></div><span>REACT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Web Apps Grid -->
+  <section class="max-w-screen-2xl mx-auto px-12 mb-40">
+    <div class="flex justify-between items-end mb-16 reveal">
+      <div>
+        <h2 class="text-5xl font-headline font-bold text-white mb-4">Web Applications</h2>
+        <p class="text-on-surface-variant">Ready-to-deploy platforms for specialized industries.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-surface-container-low rounded-xl p-4 group reveal hover-lift">
+        <div class="aspect-video rounded-lg overflow-hidden mb-8 relative bg-surface-container-high flex items-center justify-center">
+          <span class="material-symbols-outlined text-6xl text-primary opacity-30">hub</span>
+          <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+            <a href="index.html#contact" class="bg-white text-on-surface px-6 py-2 rounded-full font-bold">Get This →</a>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <h4 class="text-xl font-headline font-bold text-white mb-2">NexusCRM AI</h4>
+          <p class="text-on-surface-variant text-sm mb-8">Customer relationship management powered by predictive lead scoring and automated follow-ups.</p>
+          <div class="flex gap-4">
+            <a href="index.html#contact" class="flex-1 bg-surface-container-highest py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/20 transition-colors text-center">Live Demo</a>
+            <a href="index.html#contact" class="flex-1 border border-outline-variant/30 py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/10 transition-colors text-center">Details</a>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-low rounded-xl p-4 group reveal hover-lift">
+        <div class="aspect-video rounded-lg overflow-hidden mb-8 relative bg-surface-container-high flex items-center justify-center">
+          <span class="material-symbols-outlined text-6xl text-secondary opacity-30">shield</span>
+          <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+            <a href="index.html#contact" class="bg-white text-on-surface px-6 py-2 rounded-full font-bold">Get This →</a>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <h4 class="text-xl font-headline font-bold text-white mb-2">CloudSentinel</h4>
+          <p class="text-on-surface-variant text-sm mb-8">Autonomous infrastructure monitoring that predicts outages before they occur using anomaly detection.</p>
+          <div class="flex gap-4">
+            <a href="index.html#contact" class="flex-1 bg-surface-container-highest py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/20 transition-colors text-center">Live Demo</a>
+            <a href="index.html#contact" class="flex-1 border border-outline-variant/30 py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/10 transition-colors text-center">Details</a>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-low rounded-xl p-4 group reveal hover-lift">
+        <div class="aspect-video rounded-lg overflow-hidden mb-8 relative bg-surface-container-high flex items-center justify-center">
+          <span class="material-symbols-outlined text-6xl text-tertiary opacity-30">auto_awesome</span>
+          <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+            <a href="index.html#contact" class="bg-white text-on-surface px-6 py-2 rounded-full font-bold">Get This →</a>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <h4 class="text-xl font-headline font-bold text-white mb-2">CreativeEngine</h4>
+          <p class="text-on-surface-variant text-sm mb-8">Generative asset platform for marketing teams to produce high-fidelity visuals from text prompts.</p>
+          <div class="flex gap-4">
+            <a href="index.html#contact" class="flex-1 bg-surface-container-highest py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/20 transition-colors text-center">Live Demo</a>
+            <a href="index.html#contact" class="flex-1 border border-outline-variant/30 py-3 rounded-lg text-xs font-bold hover:bg-outline-variant/10 transition-colors text-center">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Modules -->
+  <section class="max-w-screen-2xl mx-auto px-12 mb-40">
+    <h2 class="text-5xl font-headline font-bold text-white mb-12 reveal">Service Modules</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="bg-surface-container-lowest border border-outline-variant/10 p-8 rounded-xl hover:bg-surface-container-low transition-all reveal hover-lift">
+        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-primary">sentiment_very_satisfied</span>
+        </div>
+        <h5 class="font-headline font-bold text-white mb-3">Sentiment API</h5>
+        <p class="text-xs text-on-surface-variant mb-6">Real-time emotional tone analysis for multi-lingual datasets.</p>
+        <code class="text-[10px] text-primary bg-primary/5 px-2 py-1 rounded">GET /v1/sentiment</code>
+      </div>
+      <div class="bg-surface-container-lowest border border-outline-variant/10 p-8 rounded-xl hover:bg-surface-container-low transition-all reveal hover-lift">
+        <div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-secondary">database</span>
+        </div>
+        <h5 class="font-headline font-bold text-white mb-3">Lead Scraper</h5>
+        <p class="text-xs text-on-surface-variant mb-6">Autonomous prospecting engine for B2B data enrichment.</p>
+        <code class="text-[10px] text-secondary bg-secondary/5 px-2 py-1 rounded">POST /v1/leads</code>
+      </div>
+      <div class="bg-surface-container-lowest border border-outline-variant/10 p-8 rounded-xl hover:bg-surface-container-low transition-all reveal hover-lift">
+        <div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-tertiary">translate</span>
+        </div>
+        <h5 class="font-headline font-bold text-white mb-3">Neural Transcribe</h5>
+        <p class="text-xs text-on-surface-variant mb-6">Context-aware speech-to-text with 99.8% precision.</p>
+        <code class="text-[10px] text-tertiary bg-tertiary/5 px-2 py-1 rounded">PUT /v1/audio</code>
+      </div>
+      <div class="bg-surface-container-lowest border border-outline-variant/10 p-8 rounded-xl hover:bg-surface-container-low transition-all reveal hover-lift">
+        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-8">
+          <span class="material-symbols-outlined text-primary">security</span>
+        </div>
+        <h5 class="font-headline font-bold text-white mb-3">GuardRail AI</h5>
+        <p class="text-xs text-on-surface-variant mb-6">Safety and moderation layer for LLM deployments.</p>
+        <code class="text-[10px] text-primary bg-primary/5 px-2 py-1 rounded">POST /v1/moderate</code>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-950 border-t border-slate-800/50">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-screen-2xl mx-auto text-sm">
+    <div class="md:col-span-1">
+      <a href="index.html" class="site-logo-link site-logo-link--footer mb-6 inline-flex" aria-label="NB Nexa — Home">
+        <img src="assests/logo.png" alt="NB Nexa" class="site-logo-img" width="160" height="48" decoding="async"
+          onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"/>
+        <span class="site-logo-fallback hidden">NB Nexa</span>
+      </a>
+      <p class="text-slate-500 leading-relaxed mb-6">Forging the future of enterprise operations through synthetic intelligence and refined automation.</p>
+      <div class="mt-6">
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Follow us</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://facebook.com/nbnexa" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="site-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://instagram.com/nbnexa" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="site-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/nbnexa" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="site-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://youtube.com/@nbnexa" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="site-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-white font-bold mb-6">Company</h4>
+      <ul class="space-y-4">
+        <li><a href="legal.html#contact" class="text-slate-500 hover:text-slate-300 transition-colors">About Us</a></li>
+        <li><a href="products.html" class="text-slate-500 hover:text-slate-300 transition-colors">Our Products</a></li>
+        <li><a href="nb-nexa-blog.html" class="text-slate-500 hover:text-slate-300 transition-colors">Blog</a></li>
+        <li><a href="admin/dashboard.html" class="text-slate-500 hover:text-slate-300 transition-colors">Admin Panel</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-bold mb-6">Legal</h4>
+      <ul class="space-y-4">
+        <li><a href="legal.html#privacy" class="text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</a></li>
+        <li><a href="legal.html#terms" class="text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</a></li>
+        <li><a href="legal.html#refund" class="text-slate-500 hover:text-slate-300 transition-colors">Refund Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-bold mb-6">Contact</h4>
+      <ul class="space-y-4">
+        <li class="flex items-center gap-3 text-slate-500">
+          <span class="material-symbols-outlined text-cyan-400 text-sm">mail</span>
+          niteshbeniwal@nbnexa.com
+        </li>
+        <li class="flex items-center gap-3 text-slate-500">
+          <span class="material-symbols-outlined text-cyan-400 text-sm">phone</span>
+          +91-8901106396
+        </li>
+        <li class="flex items-center gap-3 text-slate-500">
+          <span class="material-symbols-outlined text-cyan-400 text-sm">location_on</span>
+          Gurgaon, India
+        </li>
+        <li class="mt-4">
+          <a href="index.html#contact" class="block w-full py-3 bg-slate-900 text-cyan-400 border border-cyan-400/20 rounded-md font-bold hover:bg-cyan-400 hover:text-slate-950 transition-all text-center">
+            Contact Us
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="px-12 py-8 border-t border-slate-900/50 max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="text-slate-500 text-xs">© 2026 NB Nexa AI Automation Agency. All rights reserved.</div>
+    <div class="flex gap-6 text-xs text-slate-500">
+      <a href="legal.html#privacy" class="hover:text-cyan-400">Privacy Policy</a>
+      <a href="legal.html#terms" class="hover:text-cyan-400">Terms of Service</a>
+      <a href="legal.html#refund" class="hover:text-cyan-400">Refund Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/social-links.js"></script>
+<script src="js/main.js"></script>
+<script>
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobile-menu');
+if (ham && mob) {
+  ham.addEventListener('click', () => {
+    const open = mob.classList.toggle('hidden') === false;
+    ham.setAttribute('aria-expanded', open);
+  });
+}
+</script>
+</body>
+</html>

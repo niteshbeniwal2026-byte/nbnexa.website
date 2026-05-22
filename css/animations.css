@@ -1,0 +1,174 @@
+/* ============================================================
+   css/animations.css — All Animations & Transitions
+   NB Nexa | AI Automation Agency
+   ============================================================ */
+
+/* ── FADE IN UP ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FADE IN DOWN ── */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FADE IN ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── SLIDE IN LEFT ── */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── SLIDE IN RIGHT ── */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── SCALE IN ── */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── SPIN SLOW ── */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+/* ── PULSE ── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* ── FLOAT ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* ── GLOW PULSE ── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 219, 233, 0.3); }
+  50%       { box-shadow: 0 0 40px rgba(0, 219, 233, 0.6), 0 0 60px rgba(0, 219, 233, 0.2); }
+}
+.animate-glow { animation: glowPulse 3s ease-in-out infinite; }
+
+/* ── GRADIENT SHIFT ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ── STAGGER UTILITY CLASSES ── */
+.anim-1 { animation: fadeInUp 0.6s ease both; animation-delay: 0.1s; }
+.anim-2 { animation: fadeInUp 0.6s ease both; animation-delay: 0.2s; }
+.anim-3 { animation: fadeInUp 0.6s ease both; animation-delay: 0.3s; }
+.anim-4 { animation: fadeInUp 0.6s ease both; animation-delay: 0.4s; }
+.anim-5 { animation: fadeInUp 0.6s ease both; animation-delay: 0.5s; }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── HOVER LIFT ── */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ── SHIMMER ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ── TYPING CURSOR ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* ── COUNTER ── */
+.counter-value {
+  transition: all 0.5s ease;
+}
+
+/* ── TRANSITION PRESETS ── */
+.transition-fast   { transition: all 0.15s ease; }
+.transition-mid    { transition: all 0.3s ease; }
+.transition-smooth { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* ── HEADING & SUBHEADING (scroll-in; toggled by js/main.js) ── */
+.heading-anim {
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0);
+  filter: blur(0.5px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease;
+  transition-delay: var(--heading-anim-delay, 0s);
+  will-change: opacity, transform;
+}
+.heading-anim.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+.heading-sub-anim {
+  opacity: 0;
+  transform: translate3d(0, 0.35em, 0);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.06s,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+  transition-delay: var(--heading-sub-delay, 0s);
+  will-change: opacity, transform;
+}
+.heading-sub-anim.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .heading-anim,
+  .heading-sub-anim {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

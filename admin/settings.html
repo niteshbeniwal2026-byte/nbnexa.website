@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NB Nexa | Admin — Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{
+        colors:{
+          "secondary-container":"#9d05ff","primary-fixed-dim":"#00dbe9","surface-container":"#171f33",
+          "surface-container-highest":"#2d3449","surface-container-high":"#222a3d","secondary":"#dfb7ff",
+          "surface-dim":"#0b1326","on-surface-variant":"#b9cacb","primary-container":"#00f0ff",
+          "tertiary-fixed-dim":"#00e383","background":"#0b1326","surface":"#0b1326","on-background":"#dae2fd",
+          "tertiary-fixed":"#5bffa1","error":"#ffb4ab","primary":"#dbfcff","surface-container-lowest":"#060e20",
+          "outline-variant":"#3b494b","surface-container-low":"#131b2e","on-primary":"#00363a",
+          "tertiary":"#dcffe2","on-surface":"#dae2fd","outline":"#849495"
+        },
+        borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+        fontFamily:{"headline":["Space Grotesk"],"body":["Inter"]}
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/animations.css"/>
+  <style>
+    body { font-family:'Inter',sans-serif; }
+    h1,h2,h3,.font-headline { font-family:'Space Grotesk',sans-serif; }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+<aside class="bg-slate-950 left-0 h-full w-64 flex flex-col py-8 px-4 border-r border-slate-900 fixed top-0 z-50" id="admin-sidebar">
+  <div class="mb-10">
+    <h1 class="text-lg font-black text-cyan-400 mb-1">NB Nexa Admin</h1>
+    <p class="text-xs text-slate-500 uppercase tracking-widest">System Controller</p>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="dashboard.html">
+      <span class="material-symbols-outlined">dashboard</span><span class="font-medium">Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="analytics.html">
+      <span class="material-symbols-outlined">insights</span><span class="font-medium">Analytics</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="automation.html">
+      <span class="material-symbols-outlined">bolt</span><span class="font-medium">Automation Flows</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="clients.html">
+      <span class="material-symbols-outlined">group</span><span class="font-medium">Client Database</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 bg-cyan-500/10 text-cyan-400 border-r-4 border-cyan-400 hover:translate-x-1 transition-transform" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="font-medium">Settings</span>
+    </a>
+  </nav>
+  <div class="mt-auto space-y-2 pt-8 border-t border-slate-900">
+    <a href="automation.html" class="w-full bg-gradient-to-r from-cyan-400 to-cyan-600 text-on-primary font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 mb-4 no-underline hover:opacity-95 transition-opacity">
+      <span class="material-symbols-outlined">add</span> New Workflow
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../legal.html#contact">
+      <span class="material-symbols-outlined">help</span><span>Support</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../index.html">
+      <span class="material-symbols-outlined">logout</span><span>Back to Site</span>
+    </a>
+  </div>
+</aside>
+<main class="flex-1 h-screen overflow-y-auto bg-surface-dim relative scroll-smooth" style="margin-left:256px;">
+  <header class="sticky top-0 z-10 p-8 flex flex-col gap-4 bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/10">
+    <h2 class="text-3xl font-headline font-bold text-primary tracking-tight">Settings</h2>
+    <p class="text-on-surface-variant text-sm" id="live-clock">Loading...</p>
+  </header>
+  <section class="p-8 space-y-8 pb-20 max-w-2xl">
+    <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/20">
+      <h3 class="font-headline font-semibold text-primary text-lg mb-1">Site footer — social links</h3>
+      <p class="text-xs text-on-surface-variant mb-3">The live site reads <code class="text-tertiary/90">nbnexa-website/js/social-links.js</code> (next to <code class="text-tertiary/90">main.js</code>). <strong class="text-on-surface">Save to browser</strong> helps on the same origin only; publishing links for everyone means updating that file.</p>
+      <ol class="text-xs text-on-surface-variant list-decimal list-inside space-y-1.5 mb-4 border border-outline-variant/20 rounded-lg p-3 bg-surface-container-lowest/50">
+        <li>Type your Facebook, Instagram, LinkedIn, and YouTube URLs below (full <code class="text-tertiary/80">https://…</code> or domain only).</li>
+        <li>Click <strong class="text-on-surface">Download social-links.js</strong> <em>or</em> <strong class="text-on-surface">Copy file contents</strong>.</li>
+        <li><strong class="text-on-surface">Overwrite</strong> the project file <code class="text-tertiary/90">js/social-links.js</code> with the download (replace the whole file), or paste in your editor if you used Copy.</li>
+        <li>Reload <code class="text-tertiary/90">index.html</code> (and other pages) to see footer icons.</li>
+      </ol>
+      <div class="space-y-4">
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Facebook</span>
+          <input id="social-facebook" type="text" inputmode="url" autocomplete="url" placeholder="https://facebook.com/yourpage" class="mt-1 w-full rounded-lg bg-surface-container-lowest border border-outline-variant/30 px-3 py-2 text-sm text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/50 outline-none"/>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Instagram</span>
+          <input id="social-instagram" type="text" inputmode="url" autocomplete="url" placeholder="https://instagram.com/yourprofile" class="mt-1 w-full rounded-lg bg-surface-container-lowest border border-outline-variant/30 px-3 py-2 text-sm text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/50 outline-none"/>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">LinkedIn</span>
+          <input id="social-linkedin" type="text" inputmode="url" autocomplete="url" placeholder="https://linkedin.com/company/yourcompany" class="mt-1 w-full rounded-lg bg-surface-container-lowest border border-outline-variant/30 px-3 py-2 text-sm text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/50 outline-none"/>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">YouTube</span>
+          <input id="social-youtube" type="text" inputmode="url" autocomplete="url" placeholder="https://youtube.com/@yourchannel" class="mt-1 w-full rounded-lg bg-surface-container-lowest border border-outline-variant/30 px-3 py-2 text-sm text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/50 outline-none"/>
+        </label>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 mt-6">
+        <button type="button" id="save-social-links" class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400 to-cyan-600 text-on-primary text-sm font-bold hover:opacity-95">Save to browser</button>
+        <button type="button" id="download-social-js" class="px-4 py-2 rounded-lg bg-surface-container-highest text-sm font-bold text-primary border border-outline-variant/30 hover:bg-outline-variant/20">Download social-links.js</button>
+        <button type="button" id="copy-social-js" class="px-4 py-2 rounded-lg bg-surface-container-highest text-sm font-bold text-primary border border-outline-variant/30 hover:bg-outline-variant/20">Copy file contents</button>
+        <button type="button" id="clear-social-overrides" class="px-4 py-2 rounded-lg text-sm font-bold text-on-surface-variant border border-outline-variant/30 hover:text-primary">Clear browser overrides</button>
+        <span class="text-xs text-on-surface-variant basis-full sm:basis-auto" id="social-save-msg" role="status"></span>
+      </div>
+      <div data-site-social-footer-wrap class="hidden mt-6 pt-6 border-t border-outline-variant/20">
+        <p class="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-3">Preview</p>
+        <div data-site-social-footer class="flex flex-wrap gap-3"></div>
+      </div>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-6 flex items-center justify-between gap-4">
+      <div>
+        <p class="font-medium text-primary">Email digests</p>
+        <p class="text-xs text-on-surface-variant mt-1">Weekly summary to your inbox</p>
+      </div>
+      <button type="button" class="px-4 py-2 rounded-lg bg-surface-container-highest text-xs font-bold text-primary min-w-[5rem]" data-admin-setting="digests" aria-pressed="false">Off</button>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-6 flex items-center justify-between gap-4">
+      <div>
+        <p class="font-medium text-primary">Slack notifications</p>
+        <p class="text-xs text-on-surface-variant mt-1">New lead alerts</p>
+      </div>
+      <button type="button" class="px-4 py-2 rounded-lg bg-surface-container-highest text-xs font-bold text-primary min-w-[5rem]" data-admin-setting="slack" aria-pressed="false">Off</button>
+    </div>
+    <button type="button" class="px-4 py-2 rounded-lg border border-cyan-400/40 text-sm font-bold text-cyan-400 hover:bg-cyan-400/10" id="save-settings">Save preferences</button>
+    <p class="text-sm text-secondary min-h-[1.25rem]" id="settings-msg" role="status"></p>
+  </section>
+  <footer class="px-8 py-8 border-t border-slate-800/50 flex justify-between items-center bg-slate-950/30">
+    <p class="text-slate-500 text-xs">© 2026 NB Nexa AI Automation Agency.</p>
+    <a class="text-xs text-slate-500 hover:text-cyan-400" href="../index.html">Main Site</a>
+  </footer>
+</main>
+<script src="../js/social-links.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+(function () {
+  const prefix = 'nbnexa-admin:';
+  const SOCIAL_KEY = window.NBNEXA_SOCIAL_STORAGE_KEY || 'nbnexa-social-links-v1';
+
+  function sync(btn) {
+    const on = sessionStorage.getItem(prefix + btn.dataset.adminSetting) === '1';
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'On' : 'Off';
+  }
+  document.querySelectorAll('[data-admin-setting]').forEach(btn => {
+    sync(btn);
+    btn.addEventListener('click', () => {
+      const key = prefix + btn.dataset.adminSetting;
+      sessionStorage.setItem(key, sessionStorage.getItem(key) === '1' ? '0' : '1');
+      sync(btn);
+    });
+  });
+  const save = document.getElementById('save-settings');
+  const msg = document.getElementById('settings-msg');
+  if (save && msg) {
+    save.addEventListener('click', () => {
+      msg.textContent = 'Preferences saved for this browser session.';
+    });
+  }
+
+  function fileSocialDefaults() {
+    const w = window.NBNEXA_SOCIAL_LINKS;
+    if (!w || typeof w !== 'object') return {};
+    return w;
+  }
+
+  function loadSocialInputs() {
+    let stored = {};
+    try {
+      stored = JSON.parse(localStorage.getItem(SOCIAL_KEY) || '{}');
+    } catch (e) {}
+    const file = fileSocialDefaults();
+    ['facebook', 'instagram', 'linkedin', 'youtube'].forEach(function (k) {
+      const el = document.getElementById('social-' + k);
+      if (!el) return;
+      const sv = stored[k] != null ? String(stored[k]).trim() : '';
+      const fv = file[k] != null ? String(file[k]).trim() : '';
+      el.value = sv || fv;
+    });
+  }
+
+  function collectSocialFromForm() {
+    const out = {};
+    const bad = [];
+    ['facebook', 'instagram', 'linkedin', 'youtube'].forEach(function (k) {
+      const el = document.getElementById('social-' + k);
+      const v = el ? el.value.trim() : '';
+      if (v && /^javascript:/i.test(v)) bad.push(k);
+      out[k] = v;
+    });
+    return { out: out, bad: bad };
+  }
+
+  function buildSocialJsBody(out) {
+    return (
+      '/* Overwrite nbnexa-website/js/social-links.js with this entire file (keep next to main.js). */\n' +
+      'window.NBNEXA_SOCIAL_LINKS = ' +
+      JSON.stringify(out, null, 2) +
+      ';\n'
+    );
+  }
+
+  function saveSocialLinks() {
+    const hint = document.getElementById('social-save-msg');
+    const { out, bad } = collectSocialFromForm();
+    if (bad.length) {
+      if (hint) hint.textContent = 'Remove unsafe javascript: URLs.';
+      return;
+    }
+    try {
+      localStorage.setItem(SOCIAL_KEY, JSON.stringify(out));
+    } catch (e) {
+      if (hint) hint.textContent = 'Could not use localStorage. Use Download and replace js/social-links.js instead.';
+      return;
+    }
+    if (hint) hint.textContent = 'Saved in this browser. Preview updated.';
+    if (typeof window.NBNEXA_renderSocialFooter === 'function') {
+      window.NBNEXA_renderSocialFooter();
+    }
+  }
+
+  function downloadSocialJs() {
+    const hint = document.getElementById('social-save-msg');
+    const { out, bad } = collectSocialFromForm();
+    if (bad.length) {
+      if (hint) hint.textContent = 'Remove unsafe javascript: URLs.';
+      return;
+    }
+    const body = buildSocialJsBody(out);
+    const blob = new Blob([body], { type: 'application/javascript;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'social-links.js';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    if (hint) {
+      hint.textContent =
+        'Downloaded social-links.js — move it to nbnexa-website/js/ and replace the existing file, then reload the site.';
+    }
+  }
+
+  function copySocialJs() {
+    const hint = document.getElementById('social-save-msg');
+    const { out, bad } = collectSocialFromForm();
+    if (bad.length) {
+      if (hint) hint.textContent = 'Remove unsafe javascript: URLs.';
+      return;
+    }
+    const body = buildSocialJsBody(out);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(body).then(
+        function () {
+          if (hint) {
+            hint.textContent =
+              'Copied. Paste into nbnexa-website/js/social-links.js (replace all), save, reload the site.';
+          }
+        },
+        function () {
+          if (hint) hint.textContent = 'Copy blocked by the browser — use Download instead.';
+        }
+      );
+    } else if (hint) {
+      hint.textContent = 'Clipboard not available — use Download instead.';
+    }
+  }
+
+  function clearSocialOverrides() {
+    const hint = document.getElementById('social-save-msg');
+    try {
+      localStorage.removeItem(SOCIAL_KEY);
+    } catch (e) {}
+    loadSocialInputs();
+    if (typeof window.NBNEXA_renderSocialFooter === 'function') {
+      window.NBNEXA_renderSocialFooter();
+    }
+    if (hint) hint.textContent = 'Browser overrides cleared. Values shown are from js/social-links.js.';
+  }
+
+  loadSocialInputs();
+  if (typeof window.NBNEXA_renderSocialFooter === 'function') {
+    window.NBNEXA_renderSocialFooter();
+  }
+  const socialBtn = document.getElementById('save-social-links');
+  if (socialBtn) socialBtn.addEventListener('click', saveSocialLinks);
+  const dlBtn = document.getElementById('download-social-js');
+  if (dlBtn) dlBtn.addEventListener('click', downloadSocialJs);
+  const copyBtn = document.getElementById('copy-social-js');
+  if (copyBtn) copyBtn.addEventListener('click', copySocialJs);
+  const clrBtn = document.getElementById('clear-social-overrides');
+  if (clrBtn) clrBtn.addEventListener('click', clearSocialOverrides);
+})();
+</script>
+</body>
+</html>

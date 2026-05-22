@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NB Nexa | Admin — Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{
+        colors:{
+          "secondary-container":"#9d05ff","primary-fixed-dim":"#00dbe9","surface-container":"#171f33",
+          "surface-container-highest":"#2d3449","surface-container-high":"#222a3d","secondary":"#dfb7ff",
+          "surface-dim":"#0b1326","on-surface-variant":"#b9cacb","primary-container":"#00f0ff",
+          "tertiary-fixed-dim":"#00e383","background":"#0b1326","surface":"#0b1326","on-background":"#dae2fd",
+          "tertiary-fixed":"#5bffa1","error":"#ffb4ab","primary":"#dbfcff","surface-container-lowest":"#060e20",
+          "outline-variant":"#3b494b","surface-container-low":"#131b2e","on-primary":"#00363a",
+          "tertiary":"#dcffe2","on-surface":"#dae2fd","outline":"#849495"
+        },
+        borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+        fontFamily:{"headline":["Space Grotesk"],"body":["Inter"]}
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/animations.css"/>
+  <style>
+    body { font-family:'Inter',sans-serif; }
+    h1,h2,h3,.font-headline { font-family:'Space Grotesk',sans-serif; }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+<aside class="bg-slate-950 left-0 h-full w-64 flex flex-col py-8 px-4 border-r border-slate-900 fixed top-0 z-50" id="admin-sidebar">
+  <div class="mb-10">
+    <h1 class="text-lg font-black text-cyan-400 mb-1">NB Nexa Admin</h1>
+    <p class="text-xs text-slate-500 uppercase tracking-widest">System Controller</p>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="dashboard.html">
+      <span class="material-symbols-outlined">dashboard</span><span class="font-medium">Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="analytics.html">
+      <span class="material-symbols-outlined">insights</span><span class="font-medium">Analytics</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 bg-cyan-500/10 text-cyan-400 border-r-4 border-cyan-400 hover:translate-x-1 transition-transform" href="automation.html">
+      <span class="material-symbols-outlined">bolt</span><span class="font-medium">Automation Flows</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="clients.html">
+      <span class="material-symbols-outlined">group</span><span class="font-medium">Client Database</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="gallery-blog.html">
+      <span class="material-symbols-outlined">perm_media</span><span class="font-medium">Gallery &amp; Blog</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="font-medium">Settings</span>
+    </a>
+  </nav>
+  <div class="mt-auto space-y-2 pt-8 border-t border-slate-900">
+    <button type="button" class="w-full bg-gradient-to-r from-cyan-400 to-cyan-600 text-on-primary font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 mb-4" onclick="document.getElementById('flow-status').textContent='New workflow draft created (demo).';">
+      <span class="material-symbols-outlined">add</span> New Workflow
+    </button>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../legal.html#contact">
+      <span class="material-symbols-outlined">help</span><span>Support</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../index.html">
+      <span class="material-symbols-outlined">logout</span><span>Back to Site</span>
+    </a>
+  </div>
+</aside>
+<main class="flex-1 h-screen overflow-y-auto bg-surface-dim relative scroll-smooth" style="margin-left:256px;">
+  <header class="sticky top-0 z-10 p-8 flex flex-col gap-4 bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/10">
+    <h2 class="text-3xl font-headline font-bold text-primary tracking-tight">Automation flows</h2>
+    <p class="text-on-surface-variant text-sm" id="live-clock">Loading...</p>
+    <p class="text-sm text-secondary" id="flow-status" role="status"></p>
+  </header>
+  <section class="p-8 space-y-4 pb-20 max-w-3xl">
+    <div class="bg-surface-container-low rounded-xl p-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="font-headline font-semibold text-primary">Lead capture → CRM</p>
+        <p class="text-xs text-on-surface-variant mt-1">Active · last run 12 min ago</p>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" class="px-3 py-1.5 rounded-lg bg-surface-container-highest text-xs font-bold text-primary" onclick="document.getElementById('flow-status').textContent='Flow “Lead capture → CRM” opened for editing.';">Edit</button>
+        <button type="button" class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-xs font-bold text-on-surface-variant hover:text-primary" onclick="document.getElementById('flow-status').textContent='Test run started (demo).';">Test run</button>
+      </div>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="font-headline font-semibold text-primary">WhatsApp handoff</p>
+        <p class="text-xs text-on-surface-variant mt-1">Paused</p>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" class="px-3 py-1.5 rounded-lg bg-tertiary/20 text-xs font-bold text-tertiary" onclick="document.getElementById('flow-status').textContent='Flow resumed (demo).';">Resume</button>
+        <button type="button" class="px-3 py-1.5 rounded-lg bg-surface-container-highest text-xs font-bold text-primary" onclick="document.getElementById('flow-status').textContent='Flow “WhatsApp handoff” opened for editing.';">Edit</button>
+      </div>
+    </div>
+  </section>
+  <footer class="px-8 py-8 border-t border-slate-800/50 flex justify-between items-center bg-slate-950/30">
+    <p class="text-slate-500 text-xs">© 2026 NB Nexa AI Automation Agency.</p>
+    <a class="text-xs text-slate-500 hover:text-cyan-400" href="../index.html">Main Site</a>
+  </footer>
+</main>
+<script src="../js/social-links.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/admin-auth.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

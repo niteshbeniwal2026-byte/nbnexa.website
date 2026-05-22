@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NB Nexa | Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode:"class",
+      theme:{ extend:{
+        colors:{
+          "secondary-container":"#9d05ff","primary-fixed-dim":"#00dbe9","surface-container":"#171f33",
+          "surface-container-highest":"#2d3449","surface-container-high":"#222a3d","secondary":"#dfb7ff",
+          "surface-dim":"#0b1326","on-surface-variant":"#b9cacb","primary-container":"#00f0ff",
+          "tertiary-fixed-dim":"#00e383","background":"#0b1326","surface":"#0b1326","on-background":"#dae2fd",
+          "tertiary-fixed":"#5bffa1","error":"#ffb4ab","primary":"#dbfcff","surface-container-lowest":"#060e20",
+          "outline-variant":"#3b494b","surface-container-low":"#131b2e","on-primary":"#00363a",
+          "tertiary":"#dcffe2","on-surface":"#dae2fd","outline":"#849495"
+        },
+        borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+        fontFamily:{"headline":["Space Grotesk"],"body":["Inter"]}
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/animations.css"/>
+  <style>
+    body { font-family:'Inter',sans-serif; }
+    h1,h2,h3,.font-headline { font-family:'Space Grotesk',sans-serif; }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+    
+    /* Dropdown menu styling */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: #222a3d;
+      border: 1px solid #3b494b;
+      border-radius: 0.5rem;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      margin-top: 0.25rem;
+    }
+    
+    .dropdown-menu.active {
+      display: block;
+    }
+    
+    .dropdown-menu button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: #dae2fd;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: background-color 0.2s;
+    }
+    
+    .dropdown-menu button:hover {
+      background-color: #2d3449;
+      color: #dbfcff;
+    }
+    
+    .action-btn-container {
+      position: relative;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+
+<!-- ── SIDEBAR ── -->
+<aside class="bg-slate-950 left-0 h-full w-64 flex flex-col py-8 px-4 border-r border-slate-900 fixed top-0 z-50" id="admin-sidebar">
+  <div class="mb-10">
+    <h1 class="text-lg font-black text-cyan-400 mb-1">NB Nexa Admin</h1>
+    <p class="text-xs text-slate-500 uppercase tracking-widest">System Controller</p>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-4 py-3 bg-cyan-500/10 text-cyan-400 border-r-4 border-cyan-400 hover:translate-x-1 transition-transform" href="dashboard.html">
+      <span class="material-symbols-outlined">dashboard</span><span class="font-medium">Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="analytics.html">
+      <span class="material-symbols-outlined">insights</span><span class="font-medium">Analytics</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="automation.html">
+      <span class="material-symbols-outlined">bolt</span><span class="font-medium">Automation Flows</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="clients.html">
+      <span class="material-symbols-outlined">group</span><span class="font-medium">Client Database</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="gallery-blog.html">
+      <span class="material-symbols-outlined">perm_media</span><span class="font-medium">Gallery &amp; Blog</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-slate-900 hover:translate-x-1 transition-transform" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="font-medium">Settings</span>
+    </a>
+  </nav>
+  <div class="mt-auto space-y-2 pt-8 border-t border-slate-900">
+    <a href="automation.html" class="w-full bg-gradient-to-r from-cyan-400 to-cyan-600 text-on-primary font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 mb-4 no-underline hover:opacity-95 transition-opacity">
+      <span class="material-symbols-outlined">add</span> New Workflow
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../legal.html#contact">
+      <span class="material-symbols-outlined">help</span><span>Support</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-slate-100 hover:translate-x-1 transition-transform" href="../index.html">
+      <span class="material-symbols-outlined">logout</span><span>Back to Site</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="flex-1 h-screen overflow-y-auto bg-surface-dim relative scroll-smooth" style="margin-left:256px;">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-10 p-8 flex flex-col gap-8 bg-surface-dim/80 backdrop-blur-md">
+    <div class="flex justify-between items-end">
+      <div>
+        <h2 class="text-3xl font-headline font-bold text-primary tracking-tight">Executive Dashboard</h2>
+        <p class="text-on-surface-variant mt-1 text-sm" id="live-clock">Loading...</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 px-3 py-2 bg-surface-container-low rounded-lg border border-outline-variant/20">
+          <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          <span class="text-xs text-on-surface-variant">Live</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center font-bold text-on-primary text-sm">NB</div>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors"></div>
+        <p class="text-sm font-label text-on-surface-variant uppercase tracking-wider mb-2">Total Leads</p>
+        <h3 class="text-4xl font-headline font-bold text-primary stat-number" data-target="2842">0</h3>
+        <div class="mt-4 flex items-center text-tertiary text-sm">
+          <span class="material-symbols-outlined text-sm">trending_up</span>
+          <span class="ml-1">12.5% vs last month</span>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-colors"></div>
+        <p class="text-sm font-label text-on-surface-variant uppercase tracking-wider mb-2">New Inquiries</p>
+        <h3 class="text-4xl font-headline font-bold text-secondary stat-number" data-target="148">0</h3>
+        <div class="mt-4 flex items-center text-tertiary text-sm">
+          <span class="material-symbols-outlined text-sm">schedule</span>
+          <span class="ml-1">Last 24 hours</span>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-colors"></div>
+        <p class="text-sm font-label text-on-surface-variant uppercase tracking-wider mb-2">AI Chat Volume</p>
+        <h3 class="text-4xl font-headline font-bold text-tertiary">45.2k</h3>
+        <div class="mt-4 flex items-center text-primary text-sm">
+          <span class="material-symbols-outlined text-sm">robot_2</span>
+          <span class="ml-1">Automated Resolution: 89%</span>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary-container/5 rounded-full blur-2xl group-hover:bg-primary-container/10 transition-colors"></div>
+        <p class="text-sm font-label text-on-surface-variant uppercase tracking-wider mb-2">Conversion Rate</p>
+        <h3 class="text-4xl font-headline font-bold text-primary-container">18.4%</h3>
+        <div class="mt-4 flex items-center text-tertiary text-sm">
+          <span class="material-symbols-outlined text-sm">trending_up</span>
+          <span class="ml-1">Top 5% Industry Bench</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <section class="p-8 grid grid-cols-12 gap-8 pb-20">
+
+    <!-- Lead Growth Chart -->
+    <div class="col-span-12 lg:col-span-8 bg-surface-container p-8 rounded-xl relative overflow-hidden">
+      <div class="flex justify-between items-center mb-10">
+        <div>
+          <h4 class="text-xl font-headline font-semibold text-primary">Lead Growth Over Time</h4>
+          <p class="text-sm text-on-surface-variant">Performance analysis for the current fiscal quarter.</p>
+        </div>
+        <div class="flex gap-2" data-admin-chart-ranges>
+          <button type="button" data-admin-chart-range class="px-4 py-1.5 rounded-full bg-surface-container-highest text-xs font-medium text-primary">Weekly</button>
+          <button type="button" data-admin-chart-range class="px-4 py-1.5 rounded-full text-xs font-medium text-on-surface-variant hover:text-primary">Monthly</button>
+        </div>
+      </div>
+      <canvas id="leadGrowthChart" height="200"></canvas>
+    </div>
+
+    <!-- Live Chat Feed -->
+    <div class="col-span-12 lg:col-span-4 bg-surface-container-high p-8 rounded-xl flex flex-col h-full">
+      <div class="flex items-center justify-between mb-6">
+        <h4 class="text-xl font-headline font-semibold text-secondary">Live Interactions</h4>
+        <span class="flex h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+      </div>
+      <div class="flex-1 space-y-6 overflow-y-auto pr-2" id="chat-feed">
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+          </div>
+          <div class="flex-1 bg-surface-container-lowest p-4 rounded-xl rounded-tl-none border border-outline-variant/10">
+            <p class="text-xs text-secondary font-bold mb-1">NB AI v4.2</p>
+            <p class="text-sm text-on-surface italic">"I have scheduled your consultation for Thursday at 2 PM. Would you like a calendar invite?"</p>
+          </div>
+        </div>
+        <div class="flex gap-4 justify-end">
+          <div class="flex-1 bg-surface-container-highest p-4 rounded-xl rounded-tr-none text-right">
+            <p class="text-xs text-on-surface-variant font-bold mb-1">User #4829</p>
+            <p class="text-sm text-on-surface">"Yes, please send it to my email."</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+          </div>
+          <div class="flex-1 bg-surface-container-lowest p-4 rounded-xl rounded-tl-none border border-outline-variant/10">
+            <p class="text-xs text-secondary font-bold mb-1">NB AI v4.2</p>
+            <p class="text-sm text-on-surface italic">"Confirmed. You should receive the invitation shortly."</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+          </div>
+          <div class="flex-1 bg-surface-container-lowest p-4 rounded-xl rounded-tl-none border border-outline-variant/10">
+            <p class="text-xs text-secondary font-bold mb-1">NB AI v4.2</p>
+            <p class="text-sm text-on-surface italic">"Hello! How can I help you today with NB Nexa's services?"</p>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="mt-6 w-full py-3 text-sm font-bold text-secondary border border-secondary/20 rounded-lg hover:bg-secondary/5 transition-colors" onclick="document.getElementById('chat-feed')?.scrollTo({ top: 0, behavior: 'smooth' })">
+        View All Live Chats
+      </button>
+    </div>
+
+    <!-- Recent Leads Table -->
+    <div class="col-span-12 bg-surface-container-low rounded-xl overflow-hidden">
+      <div class="p-8 flex justify-between items-center flex-wrap gap-4">
+        <h4 class="text-xl font-headline font-semibold text-primary">Recent Conversions</h4>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center bg-surface-container-lowest px-4 py-2 rounded-lg border border-outline-variant/20">
+            <span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+            <input id="lead-search" class="bg-transparent border-none text-sm focus:ring-0 text-on-surface placeholder-on-surface-variant w-48 outline-none" placeholder="Search leads..."/>
+          </div>
+          <button type="button" onclick="exportCSV()" class="px-4 py-2 bg-surface-container-highest rounded-lg text-xs font-bold text-primary hover:bg-outline-variant/20 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">download</span> Export CSV
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-y border-outline-variant/10 bg-surface-container-highest/30">
+              <th class="px-8 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Name</th>
+              <th class="px-8 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Contact</th>
+              <th class="px-8 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Source</th>
+              <th class="px-8 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Status</th>
+              <th class="px-8 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/5">
+            <tr class="hover:bg-primary/5 transition-colors lead-row">
+              <td class="px-8 py-5"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-primary">RK</div><span class="font-medium">Rajesh Kumar</span></div></td>
+              <td class="px-8 py-5 text-on-surface-variant">+91 98765 43210</td>
+              <td class="px-8 py-5"><span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-xs font-bold">WhatsApp</span></td>
+              <td class="px-8 py-5"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-tertiary"></span><span class="text-sm">Qualified 🔥</span></div></td>
+              <td class="px-8 py-5 text-right">
+                <div class="action-btn-container">
+                  <button type="button" class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors action-btn" onclick="toggleDropdown(event)">
+                    <span class="material-symbols-outlined">more_vert</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button type="button" onclick="viewLead('Rajesh Kumar')">View Profile</button>
+                    <button type="button" onclick="editLead('Rajesh Kumar')">Edit</button>
+                    <button type="button" onclick="sendMessage('Rajesh Kumar')">Send Message</button>
+                    <button type="button" onclick="scheduleMeeting('Rajesh Kumar')">Schedule Meeting</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors lead-row">
+              <td class="px-8 py-5"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-secondary">PS</div><span class="font-medium">Priya Sharma</span></div></td>
+              <td class="px-8 py-5 text-on-surface-variant">+91 87654 32109</td>
+              <td class="px-8 py-5"><span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-xs font-bold">Instagram</span></td>
+              <td class="px-8 py-5"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span class="text-sm">Meeting Set 🌤</span></div></td>
+              <td class="px-8 py-5 text-right">
+                <div class="action-btn-container">
+                  <button type="button" class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors action-btn" onclick="toggleDropdown(event)">
+                    <span class="material-symbols-outlined">more_vert</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button type="button" onclick="viewLead('Priya Sharma')">View Profile</button>
+                    <button type="button" onclick="editLead('Priya Sharma')">Edit</button>
+                    <button type="button" onclick="sendMessage('Priya Sharma')">Send Message</button>
+                    <button type="button" onclick="scheduleMeeting('Priya Sharma')">Schedule Meeting</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors lead-row">
+              <td class="px-8 py-5"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-tertiary">AM</div><span class="font-medium">Arjun Mehta</span></div></td>
+              <td class="px-8 py-5 text-on-surface-variant">+91 76543 21098</td>
+              <td class="px-8 py-5"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">Website</span></td>
+              <td class="px-8 py-5"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-outline"></span><span class="text-sm">Browsing ❄</span></div></td>
+              <td class="px-8 py-5 text-right">
+                <div class="action-btn-container">
+                  <button type="button" class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors action-btn" onclick="toggleDropdown(event)">
+                    <span class="material-symbols-outlined">more_vert</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button type="button" onclick="viewLead('Arjun Mehta')">View Profile</button>
+                    <button type="button" onclick="editLead('Arjun Mehta')">Edit</button>
+                    <button type="button" onclick="sendMessage('Arjun Mehta')">Send Message</button>
+                    <button type="button" onclick="scheduleMeeting('Arjun Mehta')">Schedule Meeting</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors lead-row">
+              <td class="px-8 py-5"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-primary-container">NK</div><span class="font-medium">Neha Kapoor</span></div></td>
+              <td class="px-8 py-5 text-on-surface-variant">+91 65432 10987</td>
+              <td class="px-8 py-5"><span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-xs font-bold">Facebook Ads</span></td>
+              <td class="px-8 py-5"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-tertiary"></span><span class="text-sm">Qualified 🔥</span></div></td>
+              <td class="px-8 py-5 text-right">
+                <div class="action-btn-container">
+                  <button type="button" class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors action-btn" onclick="toggleDropdown(event)">
+                    <span class="material-symbols-outlined">more_vert</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button type="button" onclick="viewLead('Neha Kapoor')">View Profile</button>
+                    <button type="button" onclick="editLead('Neha Kapoor')">Edit</button>
+                    <button type="button" onclick="sendMessage('Neha Kapoor')">Send Message</button>
+                    <button type="button" onclick="scheduleMeeting('Neha Kapoor')">Schedule Meeting</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-6 border-t border-outline-variant/10 flex justify-center">
+        <button type="button" onclick="exportCSV()" class="text-sm text-primary hover:underline underline-offset-4">Download Full Report (CSV)</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="px-8 py-8 border-t border-slate-800/50 flex justify-between items-center bg-slate-950/30">
+    <p class="text-slate-500 text-xs">© 2026 NB Nexa AI Automation Agency. All rights reserved.</p>
+    <div class="flex gap-6">
+      <a class="text-xs text-slate-500 hover:text-cyan-400" href="../legal.html#privacy">Privacy Policy</a>
+      <a class="text-xs text-slate-500 hover:text-cyan-400" href="../legal.html#terms">Terms of Service</a>
+      <a class="text-xs text-slate-500 hover:text-cyan-400" href="../index.html">Main Site</a>
+    </div>
+  </footer>
+</main>
+
+<!-- Ambient Glows -->
+<div class="fixed bottom-0 right-0 w-[500px] h-[500px] bg-secondary-container/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="fixed top-0 left-64 w-[300px] h-[300px] bg-primary-container/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+<script src="../js/social-links.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+// ── DROPDOWN MENU HANDLER ────────────────────────────────────
+function toggleDropdown(event) {
+  event.stopPropagation();
+  const container = event.currentTarget.closest('.action-btn-container');
+  const menu = container.querySelector('.dropdown-menu');
+  
+  // Close all other dropdowns
+  document.querySelectorAll('.dropdown-menu.active').forEach(m => {
+    if (m !== menu) m.classList.remove('active');
+  });
+  
+  // Toggle current dropdown
+  menu.classList.toggle('active');
+}
+
+// Close dropdowns when clicking outside the action control (avoids racing the open toggle)
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.action-btn-container')) {
+    document.querySelectorAll('.dropdown-menu.active').forEach(m => {
+      m.classList.remove('active');
+    });
+  }
+});
+
+// ── ACTION HANDLERS ──────────────────────────────────────────
+function viewLead(name) {
+  alert(`Viewing profile for: ${name}`);
+  closeDropdowns();
+}
+
+function editLead(name) {
+  alert(`Editing lead: ${name}`);
+  closeDropdowns();
+}
+
+function sendMessage(name) {
+  alert(`Opening message composer for: ${name}`);
+  closeDropdowns();
+}
+
+function scheduleMeeting(name) {
+  alert(`Scheduling meeting with: ${name}`);
+  closeDropdowns();
+}
+
+function closeDropdowns() {
+  document.querySelectorAll('.dropdown-menu.active').forEach(m => {
+    m.classList.remove('active');
+  });
+}
+</script>
+</body>
+</html>
